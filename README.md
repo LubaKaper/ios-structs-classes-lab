@@ -27,7 +27,20 @@ fred.homePlanet = "Mars"
 
 Fix the class definition for `Giant` in the space below so that it **does** work:
 
+```
+it did not wark because homePlaner was constant and we couldn't change it
 
+class Giant {
+ var name: String = "Fred"
+ var weight: Double = 340.0
+ var homePlanet: String = "Earth"
+}
+
+let fred = Giant()
+fred.name = "Brick"
+fred.weight = 999.2
+fred.homePlanet = "Mars"
+```
 ## Question 2
 
 Take a look at this struct that represents an alien:
@@ -50,7 +63,18 @@ bilbo.homePlanet = "Saturn"
 ```
 
 Change the declaration of `bilbo` so that the above three lines of code **do** work:
-
+```
+they will not run because bilbo is a constatnt, we have to change it to variable
+struct Alien {
+ var name: String
+ var height: Double
+ var homePlanet: String
+}
+var bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
+bilbo.name = "Jake"
+bilbo.height = 1.42
+bilbo.homePlanet = "Saturn"
+```
 
 ## Question 3
 
@@ -64,8 +88,9 @@ jason.name = "Jason"
 ```
 
 What will the value of `edgar.name` be after those three lines of code are run? What will the value of `jason.name` be? Why?
-
-
+```
+both values will be "Jason". Because both objects are pointing to the same instane. Only one instance was initiated: let edgar = Giant()
+```
 ## Question 4
 
 Given this bit of code that uses the `Alien` struct:
@@ -77,8 +102,11 @@ charlesFromJupiter.homePlanet = "Jupiter"
 ```
 
 What will the value of `charles.homePlanet` be after the above code run? What about the value of `charlesFromJupiter.homePlanet`? Why?
-
-
+```
+value of charles.homePlanet will stay "Pluto""
+value of charlesFromJupiter.homePlanet will be "Jupiter""
+Because this is a struct and in structs values passed by value, and not by reference
+```
 ## Question 5
 
 Here's a struct that represents a bank account:
@@ -99,9 +127,25 @@ struct BankAccount {
 ```
 
 Does this code work? Why or why not?
+```
+it doesn't because the functions are mutating the balance varaible. Need to add "mutating function""
+```
 
 Fix the `BankAccount` struct so it does work.
+```
+struct BankAccount {
+ var owner: String
+ var balance: Double
 
+ mutating func deposit(_ amount: Double) {
+ balance += amount
+ }
+
+ mutating func withdraw(_ amount: Double) {
+ balance -= amount
+ }
+}
+```
 Given the code below (which should incorporate any fixes you made):
 
 ```swift
@@ -111,15 +155,55 @@ joeAccount.withdraw(50.0)
 ```
 
 What will the value of `joeAccount.balance` be after the above code runs? What about the value of `joeOtherAccount.balance`? Why?
-
+```
+value of `joeAccount.balance` will be 50, and value of `joeOtherAccount.balance` will stay 100. Because this is a struct and in structs values passed by value, and not by reference
+```
 
 ## Question 6
 
 a. Write a struct called `Person` that has 3 properties of type `String`: a first name, a last name and a middle name. Have the middle name be optional. Create 2 instances of a `Person`, one with a middle name and one without. Print one of their first names.
+```
+struct Person {
+    var firstName: String
+    var lastName: String
+    var middleName: String?
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+}
+var student = Person(firstName: "John", lastName: "Smith")
+student.middleName = "Alexander"
+var teacher = Person(firstName: "David", lastName: "Bowie")
+print("\(student.firstName)'s last name is \(student.lastName) and middle name is \(student.middleName ?? "no last name")")
+print(teacher.firstName)
 
+```
 
 b. Write a method in `Person` called `fullName` that will return a formatted string of an instance's full name. Call this method on both the instances you created in part a.
-
+```
+struct Person {
+    var firstName: String
+    var lastName: String
+    var middleName: String?
+    
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+    func fullName() {
+        print("\(self.firstName) \(self.middleName ?? "") \(self.lastName) ")
+    }
+}
+var student = Person(firstName: "John", lastName: "Smith")
+student.middleName = "Alexander"
+var teacher = Person(firstName: "David", lastName: "Bowie")
+print("\(student.firstName)'s last name is \(student.lastName) and middle name is \(student.middleName ?? "no last name")")
+print(teacher.firstName)
+student.fullName()
+teacher.fullName()
+```
 
 ## Question 7
 
@@ -127,7 +211,20 @@ a. Create a struct called `Book` that has properties `title`, `author` and `rati
 
 
 b. Add a method to `Book` called `isGood` that returns `true` if its rating is greater than or equal to 7
-
+```
+struct Book {
+    var title: String
+    var author: String
+    var rating: Double
+    func isGood() {
+        if self.rating >= 7 {
+            print(true)
+        }
+    }
+}
+var myBook = Book(title: "War and Peace", author: "Leo Tolstoy", rating: 8.0)
+myBook.isGood()
+```
 
 ## Question 8
 
@@ -140,7 +237,7 @@ class Dog {
 Work through the following tasks one by one, in order. Each time, add to the `Dog` class above. Each task has sample output that you should be able to replicate when you are done.
 
 a. Give `Dog` four properties, all with default values: `name (string), breed (string), mood (string), and hungry (boolean)`.
-
+//ALL MY ANSWERS TO THIS QUESTIONS ARE AFTER 8e
 ```swift
 var dog1 = Dog()
 dog1.name //returns "dog"
@@ -195,7 +292,56 @@ e. Add a type property called `count` that keeps track of how many dogs have bee
 
 //Ex: There have been four dogs created so far
 `Dog.count //returns 4`
+```
+class Dog {
+    var name: String
+    var breed: String
+    var mood: String
+    var hungry: Bool
+    static var count = 0
+    
+    init (name: String, breed: String, mood: String, hungry: Bool){
+        self.name = name
+        self.breed = breed
+        self.mood = mood
+        self.hungry = hungry
+        Dog.count += 1
+    }
+    func playFetch() {
+        self.hungry = true
+        self.mood = "playful"
+        print("Ruff!")
+    }
+    func feed() {
+    if self.hungry == true {
+        self.hungry.toggle() //
+            print("Woof")
+        
+         } else {
+      print("The dog doesn't look hungry")
 
+}
+}
+    func toString() {
+        print("""
+            Name: \(self.name)
+            Breed: \(self.breed)
+            Mood: \(self.mood)
+""")
+    }
+}
+var dog1 = Dog(name: "dog", breed: "unknown", mood: "calm", hungry: false)
+var dog2 = Dog(name: "Rhett", breed: "English Setter", mood: "Excited", hungry: false)
+dog2.playFetch()
+var dog3 = Dog(name: "Partner", breed: "Golden Retriever", mood: "thoughtful", hungry: true)
+dog3.feed()
+dog3.hungry
+var dog4 = Dog(name: "Rascal", breed: "Golden Retriever", mood: "feeling pawesome", hungry: true)
+dog4.toString()
+
+Dog.count
+
+```
 
 ## Question 9
 
@@ -218,7 +364,43 @@ tenDegreesCelsius.getFahrenheitTemp() //returns 50.0
 ```
 
 c. Give the `Celsius` struct a method called `isBelowFreezing` that returns a `Bool` (true if the temperature is below freezing).
+```
+struct FreezingPoint {
+    static var celsius = 0
+    static var fahrenheit = 32
+    static var kelvin = 273
+}
 
+
+struct Celcius {
+    var celsius: Double
+    init(celsius: Double) {
+    self.celsius = celsius
+}
+
+    func getFahrenheitTemp() {
+        let result = celsius * 1.8 + 32
+        print(result)
+    }
+    func getKelvinTemp(){
+        let result = celsius + 273
+        print(result)
+    }
+    func isBelowFreezing() {
+        if celsius <= 0 {
+         print(true)
+        } else {
+            print(false)
+        }
+    }
+}
+var tenDegreesCelcius = Celcius(celsius: 10)
+tenDegreesCelcius.celsius
+tenDegreesCelcius.getFahrenheitTemp()
+tenDegreesCelcius.getKelvinTemp()
+tenDegreesCelcius.isBelowFreezing()
+
+```
 
 ## Question 10
 
