@@ -425,7 +425,19 @@ a. Create a struct called `Movie` that has properties for `name` (`String`), `ye
 b. Create an instance method inside `Movie` called `blurb` that returns a formatted string describing the movie.
 
 Ex: "Borat came out in 2006. It was an odd film starring Sacha Baron Cohen as a man named Borat who was visiting America from Kazakhstan."
-
+```
+struct Movie {
+    var name: String
+    var year: Int
+    var genre: String
+    var cast: [String]
+    func blurb() {
+        print("\(self.name) came out in \(self.year). It was an \(self.genre) starring \(self.cast) as a man named Borat who was visiting America from Kazakhstan.")
+    }
+}
+var boratMovie = Movie(name: "Borat", year: 2006, genre: "odd film", cast: ["Sacha Baron Cohen"])
+boratMovie.blurb()
+```
 
 ## Question 12
 
