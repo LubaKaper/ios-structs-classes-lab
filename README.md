@@ -478,7 +478,15 @@ if let yearAsString = dieHardDict["year"] as? String {
  print("this didn't work")
 }
 ```
+```
+func makeMovie (dict: [String: Any]) -> Movie? {
 
+    
+    var movie = Movie(name: dieHardDict["name"] as! String, year: dieHardDict["year"] as! Int, genre: dieHardDict["genre"] as! String, cast: dieHardDict["cast"] as! [String])
+    
+    return movie
+}
+```
 ## Question 13
 
 Given the below array of movie dictionaries, use your function from the last question to create a `Array` of `Movie`.
